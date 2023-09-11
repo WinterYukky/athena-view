@@ -93,7 +93,7 @@ export class View extends Construct {
           columns: props.columns.map((column) => ({
             name: column.name,
             type:
-              column.type.inputString === "string"
+              column.type.inputString === glue.Schema.STRING.inputString
                 ? "varchar"
                 : column.type.inputString,
           })),
