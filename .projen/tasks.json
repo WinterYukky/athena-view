@@ -238,8 +238,7 @@
           "spawn": "eslint"
         },
         {
-          "exec": "integ-runner",
-          "name": "integ-test"
+          "exec": "integ-runner"
         }
       ]
     },
