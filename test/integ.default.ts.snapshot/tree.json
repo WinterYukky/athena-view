@@ -1,0 +1,432 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "IntegDefaultStack": {
+        "id": "IntegDefaultStack",
+        "path": "IntegDefaultStack",
+        "children": {
+          "Database": {
+            "id": "Database",
+            "path": "IntegDefaultStack/Database",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "IntegDefaultStack/Database/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Glue::Database",
+                  "aws:cdk:cloudformation:props": {
+                    "catalogId": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "databaseInput": {
+                      "name": "integdefaultstackdatabase1aae82df"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_glue.CfnDatabase",
+                  "version": "2.95.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-glue-alpha.Database",
+              "version": "2.95.0-alpha.0"
+            }
+          },
+          "OrderBucket": {
+            "id": "OrderBucket",
+            "path": "IntegDefaultStack/OrderBucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "IntegDefaultStack/OrderBucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "tags": [
+                      {
+                        "key": "aws-cdk:auto-delete-objects",
+                        "value": "true"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.95.0"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "IntegDefaultStack/OrderBucket/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "IntegDefaultStack/OrderBucket/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "bucket": {
+                          "Ref": "OrderBucket7AD8778F"
+                        },
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "s3:DeleteObject*",
+                                "s3:GetBucket*",
+                                "s3:List*"
+                              ],
+                              "Effect": "Allow",
+                              "Principal": {
+                                "AWS": {
+                                  "Fn::GetAtt": [
+                                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                                    "Arn"
+                                  ]
+                                }
+                              },
+                              "Resource": [
+                                {
+                                  "Fn::GetAtt": [
+                                    "OrderBucket7AD8778F",
+                                    "Arn"
+                                  ]
+                                },
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      {
+                                        "Fn::GetAtt": [
+                                          "OrderBucket7AD8778F",
+                                          "Arn"
+                                        ]
+                                      },
+                                      "/*"
+                                    ]
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.CfnBucketPolicy",
+                      "version": "2.95.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.BucketPolicy",
+                  "version": "2.95.0"
+                }
+              },
+              "AutoDeleteObjectsCustomResource": {
+                "id": "AutoDeleteObjectsCustomResource",
+                "path": "IntegDefaultStack/OrderBucket/AutoDeleteObjectsCustomResource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "IntegDefaultStack/OrderBucket/AutoDeleteObjectsCustomResource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.95.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.95.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.95.0"
+            }
+          },
+          "Custom::S3AutoDeleteObjectsCustomResourceProvider": {
+            "id": "Custom::S3AutoDeleteObjectsCustomResourceProvider",
+            "path": "IntegDefaultStack/Custom::S3AutoDeleteObjectsCustomResourceProvider",
+            "children": {
+              "Staging": {
+                "id": "Staging",
+                "path": "IntegDefaultStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Staging",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.AssetStaging",
+                  "version": "2.95.0"
+                }
+              },
+              "Role": {
+                "id": "Role",
+                "path": "IntegDefaultStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.95.0"
+                }
+              },
+              "Handler": {
+                "id": "Handler",
+                "path": "IntegDefaultStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.95.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResourceProvider",
+              "version": "2.95.0"
+            }
+          },
+          "OrderTable": {
+            "id": "OrderTable",
+            "path": "IntegDefaultStack/OrderTable",
+            "children": {
+              "Table": {
+                "id": "Table",
+                "path": "IntegDefaultStack/OrderTable/Table",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Glue::Table",
+                  "aws:cdk:cloudformation:props": {
+                    "catalogId": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "databaseName": {
+                      "Ref": "DatabaseB269D8BB"
+                    },
+                    "tableInput": {
+                      "name": "integdefaultstackordertableef4fa313",
+                      "description": "integdefaultstackordertableef4fa313 generated by CDK",
+                      "parameters": {
+                        "classification": "json",
+                        "has_encrypted_data": true
+                      },
+                      "storageDescriptor": {
+                        "location": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "s3://",
+                              {
+                                "Ref": "OrderBucket7AD8778F"
+                              },
+                              "/"
+                            ]
+                          ]
+                        },
+                        "compressed": false,
+                        "storedAsSubDirectories": false,
+                        "columns": [
+                          {
+                            "name": "orderkey",
+                            "type": "string"
+                          },
+                          {
+                            "name": "orderstatus",
+                            "type": "string"
+                          },
+                          {
+                            "name": "totalprice",
+                            "type": "bigint"
+                          },
+                          {
+                            "name": "orderdate",
+                            "type": "date"
+                          }
+                        ],
+                        "inputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+                        "outputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+                        "serdeInfo": {
+                          "serializationLibrary": "org.openx.data.jsonserde.JsonSerDe"
+                        }
+                      },
+                      "tableType": "EXTERNAL_TABLE"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_glue.CfnTable",
+                  "version": "2.95.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-glue-alpha.Table",
+              "version": "2.95.0-alpha.0"
+            }
+          },
+          "OrdersByDate": {
+            "id": "OrdersByDate",
+            "path": "IntegDefaultStack/OrdersByDate",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "IntegDefaultStack/OrdersByDate/Resource",
+                "children": {
+                  "Table": {
+                    "id": "Table",
+                    "path": "IntegDefaultStack/OrdersByDate/Resource/Table",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Glue::Table",
+                      "aws:cdk:cloudformation:props": {
+                        "catalogId": {
+                          "Ref": "AWS::AccountId"
+                        },
+                        "databaseName": {
+                          "Ref": "DatabaseB269D8BB"
+                        },
+                        "tableInput": {
+                          "name": "integdefaultstackordersbydate430b00c3",
+                          "description": "integdefaultstackordersbydate430b00c3 generated by CDK",
+                          "parameters": {
+                            "has_encrypted_data": true
+                          },
+                          "storageDescriptor": {
+                            "location": "s3://dummybucket/",
+                            "compressed": false,
+                            "storedAsSubDirectories": false,
+                            "columns": [
+                              {
+                                "name": "orderdate",
+                                "type": "string"
+                              },
+                              {
+                                "name": "price",
+                                "type": "bigint"
+                              }
+                            ],
+                            "inputFormat": "",
+                            "outputFormat": "",
+                            "serdeInfo": {
+                              "serializationLibrary": ""
+                            }
+                          },
+                          "tableType": "EXTERNAL_TABLE"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_glue.CfnTable",
+                      "version": "2.95.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-glue-alpha.Table",
+                  "version": "2.95.0-alpha.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.0.5"
+            }
+          },
+          "DummyBucket": {
+            "id": "DummyBucket",
+            "path": "IntegDefaultStack/DummyBucket",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+              "version": "2.95.0"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "IntegDefaultStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.95.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "IntegDefaultStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.95.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.95.0"
+        }
+      },
+      "IntegTestDefault": {
+        "id": "IntegTestDefault",
+        "path": "IntegTestDefault",
+        "children": {
+          "DefaultTest": {
+            "id": "DefaultTest",
+            "path": "IntegTestDefault/DefaultTest",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "IntegTestDefault/DefaultTest/Default",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.0.5"
+                }
+              },
+              "DeployAssert": {
+                "id": "DeployAssert",
+                "path": "IntegTestDefault/DefaultTest/DeployAssert",
+                "children": {
+                  "BootstrapVersion": {
+                    "id": "BootstrapVersion",
+                    "path": "IntegTestDefault/DefaultTest/DeployAssert/BootstrapVersion",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnParameter",
+                      "version": "2.95.0"
+                    }
+                  },
+                  "CheckBootstrapVersion": {
+                    "id": "CheckBootstrapVersion",
+                    "path": "IntegTestDefault/DefaultTest/DeployAssert/CheckBootstrapVersion",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnRule",
+                      "version": "2.95.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Stack",
+                  "version": "2.95.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/integ-tests-alpha.IntegTestCase",
+              "version": "2.95.0-alpha.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@aws-cdk/integ-tests-alpha.IntegTest",
+          "version": "2.95.0-alpha.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.0.5"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.95.0"
+    }
+  }
+}
