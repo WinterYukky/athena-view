@@ -17,7 +17,7 @@ import * as glue from "@aws-cdk/aws-glue-alpha";
 import { View } from "athena-view";
 
 const database = new glue.Database(this, "Database");
-const orderTable = new glue.Table(this, "OrderTable", {
+const orderTable = new glue.S3Table(this, "OrderTable", {
   database,
   columns: [
     { name: "orderkey", type: glue.Schema.STRING },
