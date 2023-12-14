@@ -1,5 +1,5 @@
 import { awscdk } from "projen";
-const cdkVersion = "2.95.0";
+const cdkVersion = "2.115.0";
 const project = new awscdk.AwsCdkConstructLibrary({
   author: "WinterYukky",
   authorAddress: "49480575+WinterYukky@users.noreply.github.com",

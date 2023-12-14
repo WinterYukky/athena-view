@@ -9,7 +9,7 @@ class AthenaViewStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     const database = new glue.Database(this, "Database");
-    new glue.Table(this, "OrderTable", {
+    new glue.S3Table(this, "OrderTable", {
       bucket: new s3.Bucket(this, "OrderBucket", {
         removalPolicy: RemovalPolicy.DESTROY,
         autoDeleteObjects: true,

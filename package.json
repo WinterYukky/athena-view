@@ -35,13 +35,13 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/integ-runner": "2.95.0-alpha.0",
-    "@aws-cdk/integ-tests-alpha": "2.95.0-alpha.0",
+    "@aws-cdk/integ-runner": "2.115.0-alpha.0",
+    "@aws-cdk/integ-tests-alpha": "2.115.0-alpha.0",
     "@types/jest": "^29.5.11",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
-    "aws-cdk-lib": "2.95.0",
+    "aws-cdk-lib": "2.115.0",
     "constructs": "10.0.5",
     "eslint": "^8",
     "eslint-config-prettier": "^9.1.0",
@@ -63,11 +63,11 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.95.0",
+    "aws-cdk-lib": "^2.115.0",
     "constructs": "^10.0.5"
   },
   "dependencies": {
-    "@aws-cdk/aws-glue-alpha": "2.95.0-alpha.0"
+    "@aws-cdk/aws-glue-alpha": "2.115.0-alpha.0"
   },
   "keywords": [
     "cdk"
