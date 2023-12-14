@@ -62,7 +62,7 @@ export class View extends Construct {
       tableName: props.viewName,
       columns: props.columns,
       database: props.database,
-      bucket: s3.Bucket.fromBucketName(scope, "DummyBucket", "dummybucket"),
+      bucket: s3.Bucket.fromBucketName(this, "DummyBucket", "dummybucket"),
       dataFormat: new glue.DataFormat({
         inputFormat: new glue.InputFormat(""),
         outputFormat: new glue.InputFormat(""),

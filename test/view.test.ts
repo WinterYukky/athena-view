@@ -4,11 +4,12 @@ import { Template } from "aws-cdk-lib/assertions";
 import * as iam from "aws-cdk-lib/aws-iam";
 import { View } from "../src";
 
-test("Should not create S3 Bucket", () => {
+describe("Multiple Views", () => {
   const app = new App();
   const stack = new Stack(app);
   const database = new glue.Database(stack, "Database");
-  // const orderTable = new glue.Table(stack, "OrderTable", {
+  // Assume that you are creating this table
+  // new glue.Table(stack, "OrderTable", {
   //   database,
   //   columns: [
   //     { name: "orderkey", type: glue.Schema.STRING },
@@ -18,7 +19,15 @@ test("Should not create S3 Bucket", () => {
   //   ],
   //   dataFormat: glue.DataFormat.JSON,
   // });
-
+  new View(stack, "Test", {
+    database,
+    columns: [
+      { name: "orderkey", type: glue.Schema.STRING },
+      { name: "orderstatus", type: glue.Schema.STRING },
+      { name: "half", type: glue.Schema.BIG_INT },
+    ],
+    queryString: `SELECT orderkey, orderstatus, totalprice / 2 AS half FROM orders;`,
+  });
   new View(stack, "OrdersByDate", {
     database,
     columns: [
@@ -28,7 +37,11 @@ test("Should not create S3 Bucket", () => {
     queryString: `SELECT orderdate, sum(totalprice) AS price FROM orders GROUP BY orderdate;`,
   });
   const template = Template.fromStack(stack);
-  template.resourceCountIs("AWS::S3::Bucket", 0);
+  it("Should create 2 Glue Tables", () =>
+    template.resourceCountIs("AWS::Glue::Table", 2));
+
+  it("Should not create S3 Bucket", () =>
+    template.resourceCountIs("AWS::S3::Bucket", 0));
 });
 
 test("Should can use grant APIs", () => {
