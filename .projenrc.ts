@@ -44,6 +44,7 @@ releaseDrafter?.on({
 });
 releaseDrafter?.addJobs({
   update_release_draft: {
+    runsOn: ["ubuntu-latest"],
     permissions: {
       contents: JobPermission.WRITE,
       pullRequests: JobPermission.WRITE,
