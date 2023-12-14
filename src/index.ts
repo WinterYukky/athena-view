@@ -84,6 +84,10 @@ export class View extends Construct {
     cfnViewTable.addPropertyOverride("TableInput.Parameters.presto_view", true);
     cfnViewTable.addPropertyOverride("TableInput.TableType", "VIRTUAL_VIEW");
     cfnViewTable.addPropertyOverride(
+      "TableInput.ViewExpandedText",
+      "/* Presto View */",
+    );
+    cfnViewTable.addPropertyOverride(
       "TableInput.ViewOriginalText",
       `/* Presto View: ${Fn.base64(
         JSON.stringify({

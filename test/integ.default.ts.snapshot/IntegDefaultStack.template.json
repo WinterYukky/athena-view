@@ -247,6 +247,7 @@
       "StoredAsSubDirectories": false
      },
      "TableType": "VIRTUAL_VIEW",
+     "ViewExpandedText": "/* Presto View */",
      "ViewOriginalText": {
       "Fn::Join": [
        "",
