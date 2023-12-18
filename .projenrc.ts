@@ -26,6 +26,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
   ] /* Build dependencies for this module. */,
   // packageName: undefined,  /* The "name" in package.json. */
 });
+
+// Integ test
 project.addTask("integ", {
   description: "Run integ tests",
   steps: [
@@ -36,6 +38,8 @@ project.addTask("integ", {
   ],
 });
 project.testTask.exec("integ-runner");
+
+// release
 const releaseDrafter = project.github?.addWorkflow("release-drafter");
 releaseDrafter?.on({
   push: {
@@ -84,6 +88,7 @@ release?.addJobs({
     },
     env: {
       CI: "true",
+      RELEASE_VERSION: "{{ github.ref_name }}",
     },
     steps: [
       {
@@ -109,8 +114,20 @@ release?.addJobs({
         run: "yarn install --check-files --frozen-lockfile",
       },
       {
-        name: "release",
-        run: "npx projen release",
+        name: "Remove dist",
+        run: "rm -fr dist",
+      },
+      {
+        name: "bump",
+        run: 'sed -i "s/\\"version\\": \\"0.0.0\\"/\\"version\\": \\"${RELEASE_VERSION}\\"/" package.json',
+      },
+      {
+        name: "build",
+        run: "npx projen build",
+      },
+      {
+        name: "unbump",
+        run: 'sed -i "s/\\"version": \\"${RELEASE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
       },
       {
         name: "Check for new commits",
