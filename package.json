@@ -71,7 +71,9 @@
     "@aws-cdk/aws-glue-alpha": "2.115.0-alpha.0"
   },
   "keywords": [
-    "cdk"
+    "athena",
+    "cdk",
+    "view"
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",

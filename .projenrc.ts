@@ -13,6 +13,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.0.0",
   name: "athena-view",
+  keywords: ["athena", "view"],
   projenrcTs: true,
   repositoryUrl: "https://github.com/WinterYukky/athena-view.git",
   prettier: true,
@@ -198,7 +199,7 @@ release?.addJobs({
       {
         name: "Release",
         env: {
-          NPM_DIST_TAG: "latest",
+          NPM_DIST_TAG: "{{ github.ref_name }}",
           NPM_REGISTRY: "registry.npmjs.org",
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
         },
