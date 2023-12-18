@@ -3,7 +3,10 @@ import { JobPermission } from "projen/lib/github/workflows-model";
 import { ReleaseTrigger } from "projen/lib/release";
 const cdkVersion = "2.115.0";
 const project = new awscdk.AwsCdkConstructLibrary({
-  releaseTrigger: ReleaseTrigger.manual(),
+  releaseTrigger: ReleaseTrigger.manual({
+    gitPushCommand: "",
+    changelog: false,
+  }),
   author: "WinterYukky",
   authorAddress: "49480575+WinterYukky@users.noreply.github.com",
   cdkVersion,
