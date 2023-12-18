@@ -12,7 +12,6 @@ jobs:
       contents: write
     outputs:
       latest_commit: ${{ steps.git_remote.outputs.latest_commit }}
-      package_version: ${{ steps.package_version.outputs.package_version }}
     env:
       CI: "true"
       RELEASE_VERSION: ${{ github.ref_name }}
@@ -87,7 +86,7 @@ jobs:
         run: mv .repo/dist dist
       - name: Release
         env:
-          NPM_DIST_TAG: ${{ needs.release.outputs.package_version }}
+          NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx -p publib@latest publib-npm

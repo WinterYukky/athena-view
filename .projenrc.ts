@@ -86,10 +86,6 @@ release?.addJobs({
         stepId: "git_remote",
         outputName: "latest_commit",
       },
-      package_version: {
-        stepId: "package_version",
-        outputName: "package_version",
-      },
     },
     env: {
       CI: "true",
@@ -215,7 +211,7 @@ release?.addJobs({
       {
         name: "Release",
         env: {
-          NPM_DIST_TAG: "${{ needs.release.outputs.package_version }}",
+          NPM_DIST_TAG: "latest",
           NPM_REGISTRY: "registry.npmjs.org",
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
         },
