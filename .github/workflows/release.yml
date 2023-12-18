@@ -37,7 +37,7 @@ jobs:
       - name: build
         run: npx projen build
       - name: unbump
-        run: 'sed -i "s/\"version": \"${RELEASE_VERSION}\"/\"version\": \"0.0.0\"/" package.json'
+        run: 'sed -i "s/\"version\": \"${RELEASE_VERSION}\"/\"version\": \"0.0.0\"/" package.json'
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h ${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT

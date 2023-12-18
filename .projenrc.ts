@@ -127,7 +127,7 @@ release?.addJobs({
       },
       {
         name: "unbump",
-        run: 'sed -i "s/\\"version": \\"${RELEASE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
+        run: 'sed -i "s/\\"version\\": \\"${RELEASE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
       },
       {
         name: "Check for new commits",
