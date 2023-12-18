@@ -40,10 +40,6 @@ jobs:
         run: 'sed -i "s/\"version\": \"0.0.0\"/\"version\": \"${PACKAGE_VERSION}\"/" package.json'
       - name: build
         run: npx projen build
-      - name: unbump
-        env:
-          PACKAGE_VERSION: ${{ steps.package_version.outputs.package_version }}
-        run: 'sed -i "s/\"version\": \"${PACKAGE_VERSION}\"/\"version\": \"0.0.0\"/" package.json'
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h ${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT

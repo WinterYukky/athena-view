@@ -134,14 +134,14 @@ release?.addJobs({
         name: "build",
         run: "npx projen build",
       },
-      {
-        name: "unbump",
-        run: 'sed -i "s/\\"version\\": \\"${PACKAGE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
-        env: {
-          PACKAGE_VERSION:
-            "${{ steps.package_version.outputs.package_version }}",
-        },
-      },
+      // {
+      //   name: "unbump",
+      //   run: 'sed -i "s/\\"version\\": \\"${PACKAGE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
+      //   env: {
+      //     PACKAGE_VERSION:
+      //       "${{ steps.package_version.outputs.package_version }}",
+      //   },
+      // },
       {
         name: "Check for new commits",
         id: "git_remote",
