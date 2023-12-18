@@ -14,7 +14,7 @@ jobs:
       latest_commit: ${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: "true"
-      RELEASE_VERSION: "{{ github.ref_name }}"
+      PACKAGE_VERSION: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,11 +33,11 @@ jobs:
       - name: Remove dist
         run: rm -fr dist
       - name: bump
-        run: 'sed -i "s/\"version\": \"0.0.0\"/\"version\": \"${RELEASE_VERSION}\"/" package.json'
+        run: 'sed -i "s/\"version\": \"0.0.0\"/\"version\": \"${PACKAGE_VERSION}\"/" package.json'
       - name: build
         run: npx projen build
       - name: unbump
-        run: 'sed -i "s/\"version\": \"${RELEASE_VERSION}\"/\"version\": \"0.0.0\"/" package.json'
+        run: 'sed -i "s/\"version\": \"${PACKAGE_VERSION}\"/\"version\": \"0.0.0\"/" package.json'
       - name: Check for new commits
         id: git_remote
         run: echo "latest_commit=$(git ls-remote origin -h ${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
@@ -80,7 +80,7 @@ jobs:
         run: mv .repo/dist dist
       - name: Release
         env:
-          NPM_DIST_TAG: "{{ github.ref_name }}"
+          NPM_DIST_TAG: ${{ github.ref_name }}
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx -p publib@latest publib-npm

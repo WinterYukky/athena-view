@@ -89,7 +89,7 @@ release?.addJobs({
     },
     env: {
       CI: "true",
-      RELEASE_VERSION: "{{ github.ref_name }}",
+      PACKAGE_VERSION: "${{ github.ref_name }}",
     },
     steps: [
       {
@@ -120,7 +120,7 @@ release?.addJobs({
       },
       {
         name: "bump",
-        run: 'sed -i "s/\\"version\\": \\"0.0.0\\"/\\"version\\": \\"${RELEASE_VERSION}\\"/" package.json',
+        run: 'sed -i "s/\\"version\\": \\"0.0.0\\"/\\"version\\": \\"${PACKAGE_VERSION}\\"/" package.json',
       },
       {
         name: "build",
@@ -128,7 +128,7 @@ release?.addJobs({
       },
       {
         name: "unbump",
-        run: 'sed -i "s/\\"version\\": \\"${RELEASE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
+        run: 'sed -i "s/\\"version\\": \\"${PACKAGE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
       },
       {
         name: "Check for new commits",
@@ -199,7 +199,7 @@ release?.addJobs({
       {
         name: "Release",
         env: {
-          NPM_DIST_TAG: "{{ github.ref_name }}",
+          NPM_DIST_TAG: "${{ github.ref_name }}",
           NPM_REGISTRY: "registry.npmjs.org",
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
         },
