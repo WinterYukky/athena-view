@@ -86,12 +86,20 @@ release?.addJobs({
         stepId: "git_remote",
         outputName: "latest_commit",
       },
+      package_version: {
+        stepId: "package_version",
+        outputName: "package_version",
+      },
     },
     env: {
       CI: "true",
-      PACKAGE_VERSION: "${{ github.ref_name }}",
+      RELEASE_VERSION: "${{ github.ref_name }}",
     },
     steps: [
+      {
+        id: "package_version",
+        run: `echo "package_version=$RELEASE_VERSION" | sed 's/=v/=/' >> $GITHUB_OUTPUT`,
+      },
       {
         name: "Checkout",
         uses: "actions/checkout@v3",
@@ -121,6 +129,10 @@ release?.addJobs({
       {
         name: "bump",
         run: 'sed -i "s/\\"version\\": \\"0.0.0\\"/\\"version\\": \\"${PACKAGE_VERSION}\\"/" package.json',
+        env: {
+          PACKAGE_VERSION:
+            "${{ steps.package_version.outputs.package_version }}",
+        },
       },
       {
         name: "build",
@@ -129,6 +141,10 @@ release?.addJobs({
       {
         name: "unbump",
         run: 'sed -i "s/\\"version\\": \\"${PACKAGE_VERSION}\\"/\\"version\\": \\"0.0.0\\"/" package.json',
+        env: {
+          PACKAGE_VERSION:
+            "${{ steps.package_version.outputs.package_version }}",
+        },
       },
       {
         name: "Check for new commits",
@@ -199,7 +215,7 @@ release?.addJobs({
       {
         name: "Release",
         env: {
-          NPM_DIST_TAG: "${{ github.ref_name }}",
+          NPM_DIST_TAG: "${{ needs.release.outputs.package_version }}",
           NPM_REGISTRY: "registry.npmjs.org",
           NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
         },
